@@ -10,12 +10,8 @@ using UnityEngine.UI;
 public class Main : MonoBehaviour
 {
     public static List<Group> Groups = new List<Group>();
-   
-    byte[] buffer = new byte[1024];
-    UdpClient listener;
-    IPEndPoint groupEP;
-    public  bool load = false;
-    public  bool play = false;
+    public bool load = false;
+    public bool play = false;
     public GameObject objectPrefab;
     public Material on;
     public Material off;
@@ -23,75 +19,45 @@ public class Main : MonoBehaviour
 
     void Awake()
     {
-     
         Instance = this;
     }
-    public GameObject create(int pos,int i, int j,int count)
+    public GameObject create(int pos, int i, int j, int count)
     {
-       int posnew = pos *1200;
+        int posnew = pos * 1200;
         Vector3 position;
-      
-        
-            position = new Vector3((j * 100 + posnew), i * 100, 100);
-        
-        Debug.Log(pos);
+
+
+        position = new Vector3((j * 100 + posnew), i * 100, 100);
+
         // Instantiate the object at the calculated position
         objectPrefab = Instantiate(objectPrefab, position, Quaternion.identity);
 
         return objectPrefab;
     }
 
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-
-
-    }
-
-    // Update is called once per frame
     void Update()
     {
-        
-        if (load && play && Groups[0].getDataLength() > 0) {
-            foreach (Group g in Groups) // Assuming Groups is a List<Group> defined elsewhere
+        if (load && play && Groups[0].getDataLength() > 0)
+        {
+            foreach (Group g in Groups)
             {
-
                 g.Start();
             }
-
         }
-       
-           
     }
 
-   
+    public void OnButtonPress() { ReadXML(); }
 
-    public void OnButtonPress()
-    {
-        ReadXML();
-    }
-
-    public void OnButtonPress2()
-    {
-        play = true;
-
-       
-    }
-
-
+    public void OnButtonPress2() { play = true; }
 
     private void ReadXML()
     {
-        string filePath = "C:/Users/junai/eclipse-workspace/FYP/data/Test.iqr"; // Update with the correct path
+        string filePath = "C:/Users/junai/eclipse-workspace/FYP/data/Test.iqr";
 
         try
         {
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.Load(filePath);
-
             XmlNodeList groupNodes = xmlDoc.GetElementsByTagName("Group");
             int pos = 0;
             foreach (XmlNode groupNode in groupNodes)
@@ -113,16 +79,38 @@ public class Main : MonoBehaviour
                 XmlElement neurons = (XmlElement)groupElement.GetElementsByTagName("Neuron")[0];
                 Debug.Log("    Neuron name: " + neurons.GetAttribute("name"));
 
-                Groups.Add(new Group(Gid, Gname, xCount, int.Parse(yCount),pos));
+                Groups.Add(new Group(Gid, Gname, xCount, int.Parse(yCount), pos));
                 pos++;
             }
+
+            groupNodes = xmlDoc.GetElementsByTagName("Connection");
+
+            foreach (XmlNode groupNode in groupNodes)
+            {
+                XmlElement groupElement = (XmlElement)groupNode;
+
+                Debug.Log("    ID: " + groupElement.GetAttribute("id"));
+                string id = groupElement.GetAttribute("id");
+
+                Debug.Log("    type: " + groupElement.GetAttribute("type"));
+                string type = groupElement.GetAttribute("type");
+                Debug.Log("    source: " + groupElement.GetAttribute("source"));
+                Debug.Log("    target: " + groupElement.GetAttribute("target"));
+                Group[] TS = findGroups(groupElement.GetAttribute("source"), groupElement.GetAttribute("target"));
+
+                Synapse s = new Synapse(id, type, TS[0], TS[1]);
+                TS[0].addConnection(s);
+                TS[1].addConnection(s);
+
+            }
+
             load = true;
         }
         catch (XmlException xmlEx)
         {
             Debug.LogError("XML Exception: " + xmlEx.Message);
         }
-        
+
     }
 
 
@@ -131,22 +119,22 @@ public class Main : MonoBehaviour
         List<double> tempData = new List<double>();
 
         string[] pairs = data.Split(';');
-      
-        for(int i = 0;i < pairs.Length - 1;i++)
+
+        for (int i = 0; i < pairs.Length - 1; i++)
         {
             string[] parts = pairs[i].Split(':');
             string id = parts[0];
-            
+
             double value = double.Parse(parts[1]);
             if (value > 1)
             {
                 value = 1;
             }
-            foreach (Group g in Groups) // Assuming Groups is a List<Group> defined elsewhere
+            foreach (Group g in Groups)
             {
-                if (g.getGroupId().Equals(id)) // Assuming Group class has a GroupId property
+                if (g.getID().Equals(id))
                 {
-                    g.addData(value); // Assuming Group class has an AddData method
+                    g.addData(value);
                 }
             }
         }
@@ -155,20 +143,15 @@ public class Main : MonoBehaviour
     public void Turnon(GameObject o)
     {
         MeshRenderer renderer = o.GetComponent<MeshRenderer>();
-
         if (renderer != null)
         {
-            // Create a new instance of the material
             Material instanceMaterial = new Material(on);
-
-            // Assign the new material to the renderer's material, not the sharedMaterial
             renderer.material = instanceMaterial;
         }
     }
 
-    public void Turnoff(GameObject[,]o,int xcount,int ycount)
+    public void Turnoff(GameObject[,] o, int xcount, int ycount)
     {
-
         for (int i = 0; i < xcount; i++)
         {
             for (int j = 0; j < ycount; j++)
@@ -176,14 +159,30 @@ public class Main : MonoBehaviour
                 MeshRenderer renderer = o[i, j].GetComponent<MeshRenderer>();
                 if (renderer != null)
                 {
-                    // Create a new instance of the material
                     Material instanceMaterial = new Material(off);
-
-                    // Assign the new material to the renderer's material, not the sharedMaterial
                     renderer.material = instanceMaterial;
                 }
             }
         }
     }
 
+
+    public Group[] findGroups(string source, string target)
+    {
+        Group[] g = new Group[2];
+
+        foreach (Group group in Groups)
+        {
+            if (group.getID().Equals(source))
+            {
+                g[0] = group;
+
+            }
+            else if (group.getID().Equals(target))
+            {
+                g[1] = group;
+            }
+        }
+        return g;
+    }
 }

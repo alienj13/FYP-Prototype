@@ -32,7 +32,7 @@ public class Group
         {
             for (int j = 0; j < ycount; j++)
             {
-                cubes[i, j] = Main.Instance.create(pos, i, j, xcount);
+                cubes[i, j] = Main.Instance.create(pos, i, j, xcount,ycount);
             }
         }
     }

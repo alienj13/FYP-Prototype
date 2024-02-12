@@ -16,6 +16,8 @@ public class Group
     System.Random random = new System.Random();
     private int pos;
 
+    private Vector3 centerPosition;
+
 
     public Group(string id, string name, int xcount, int ycount, int pos)
     {
@@ -35,10 +37,23 @@ public class Group
                 cubes[i, j] = Main.Instance.create(pos, i, j, xcount,ycount);
             }
         }
+          foreach (Synapse s in connections)
+          {
+            if(!s.connected){
+
+            }
+          }
     }
+
+  
+
 
 public string getID(){
     return id;
+}
+
+public int getPos(){
+    return pos;
 }
 
 public string getName(){

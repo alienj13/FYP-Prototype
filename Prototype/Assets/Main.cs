@@ -13,6 +13,7 @@ public class Main : MonoBehaviour
     public bool load = false;
     public bool play = false;
     public GameObject objectPrefab;
+    public GameObject cylinderPrefab;
     public Material on;
     public Material off;
     public static Main Instance { get; private set; }
@@ -21,23 +22,47 @@ public class Main : MonoBehaviour
     {
         Instance = this;
     }
+
+    public Vector3 GetCubePosition(int pos, float cubeSize, float cubeHeight)
+{
+    if (pos == 0)
+        return new Vector3(0, 0, 0); // Base cube position
+
+    int level = 1;
+    int totalCubesInPreviousLevels = 1;
+    int cubesInCurrentLevel = (level + 1) * (level + 1);
+
+    // Find the level where the cube belongs
+    while (pos >= totalCubesInPreviousLevels + cubesInCurrentLevel)
+    {
+        totalCubesInPreviousLevels += cubesInCurrentLevel;
+        level++;
+        cubesInCurrentLevel = (level + 1) * (level + 1);
+    }
+
+    // Calculate the position within the current level
+    int posInCurrentLevel = pos - totalCubesInPreviousLevels;
+    int rowInCurrentLevel = posInCurrentLevel / (level + 1);
+    int colInCurrentLevel = posInCurrentLevel % (level + 1);
+
+    // Calculate actual position
+    float x = (colInCurrentLevel - level / 2f) * cubeSize;
+    float y = level * cubeHeight; // Negative because it's an upside-down pyramid
+    float z = (rowInCurrentLevel - level / 2f) * cubeSize;
+
+    return new Vector3(x, y, z);
+}
+
     public GameObject create(int pos, int i, int j, int rows, int cols)
     {
         int posnew = pos * 1500;
-        // Vector3 position;
-
-
-        //position = new Vector3((j * 100 + posnew), i * 100, 100);
-
-        // Instantiate the object at the calculated position
-        //objectPrefab = Instantiate(objectPrefab, position, Quaternion.identity);
-
-
-
+       
         //Convert 2D array indices to spherical coordinates
         float theta = (i / (float)(rows - 1)) * Mathf.PI; // 0 to PI (top to bottom)
         float phi = (j / (float)(cols - 1)) * 2 * Mathf.PI; // 0 to 2PI (around the sphere)
 
+        Vector3 v = GetCubePosition(pos,2000,2000);
+        
         // Convert spherical coordinates to Cartesian coordinates for the neuron's position
         Vector3 position;
 
@@ -46,18 +71,18 @@ public class Main : MonoBehaviour
             position = new Vector3(
                 500.0f * Mathf.Sin(theta) * Mathf.Cos(phi),
                 500.0f * Mathf.Cos(theta),
-                500.0f * Mathf.Sin(theta) * Mathf.Sin(phi) + posnew
+                500.0f * Mathf.Sin(theta) * Mathf.Sin(phi) 
             );
         }else{
             position = new Vector3(
-                500.0f * Mathf.Sin(theta) * Mathf.Cos(phi)+posnew-1,
-                500.0f * Mathf.Cos(theta)+ 2000,
+                500.0f * Mathf.Sin(theta) * Mathf.Cos(phi),
+                500.0f * Mathf.Cos(theta),
                 500.0f * Mathf.Sin(theta) * Mathf.Sin(phi) 
             );
         }
 
-            // Instantiate the neuron at the calculated position
-            objectPrefab = Instantiate(objectPrefab, position, Quaternion.identity, transform);
+         
+            objectPrefab = Instantiate(objectPrefab, position+v, Quaternion.identity, transform);
 
             MeshRenderer renderer = objectPrefab.GetComponent<MeshRenderer>();
             if (renderer != null)
@@ -68,6 +93,27 @@ public class Main : MonoBehaviour
 
             return objectPrefab;
         }
+
+
+    public GameObject CreateConnection(int sourcePos, int targetPos)
+{
+    Vector3 sourcePosition = GetCubePosition(sourcePos,2000,2000);
+    Vector3 targetPosition = GetCubePosition(targetPos,2000,2000);
+    // Calculate the midpoint
+    Vector3 midpoint = (sourcePosition + targetPosition) / 2f;
+
+    // Instantiate the cylinder at the midpoint
+    GameObject cylinder = GameObject.Instantiate(cylinderPrefab, midpoint, Quaternion.identity);
+
+    // Scale the cylinder
+    float distance = Vector3.Distance(sourcePosition, targetPosition);
+    cylinder.transform.localScale = new Vector3(cylinder.transform.localScale.x/2, distance / 2f, cylinder.transform.localScale.z);
+
+    // Orient the cylinder
+    cylinder.transform.up = targetPosition - sourcePosition;
+
+    return cylinder;
+}
 
         void Update()
         {
@@ -82,7 +128,7 @@ public class Main : MonoBehaviour
 
         public void OnButtonPress() { ReadXML(); }
 
-        public void OnButtonPress2() { play = true; }
+        public void OnButtonPress2() {if(load) {play = !play;} }
 
         private void ReadXML()
         {

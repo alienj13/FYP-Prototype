@@ -156,6 +156,7 @@ MonoBehaviour:
   load: 0
   play: 0
   objectPrefab: {fileID: 6632094566943612692, guid: 4e542449d8cb38f458f6a9973e77564a, type: 3}
+  cylinderPrefab: {fileID: 2782823086665565106, guid: 3f9034063587c7d4893718637a4e31b7, type: 3}
   on: {fileID: 2100000, guid: e05e5ea174ee0cf42b4d370ec04a09ff, type: 2}
   off: {fileID: 2100000, guid: fb19e2c8e92907d4190496f0f3378fde, type: 2}
 --- !u!4 &219088940

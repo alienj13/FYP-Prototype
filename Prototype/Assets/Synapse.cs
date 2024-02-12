@@ -9,6 +9,8 @@ public class Synapse
     private Group target;
     private Group source;
 
+    public bool connected;
+
 
     public Synapse(string id, string type, Group source, Group target)
     {
@@ -16,6 +18,8 @@ public class Synapse
         this.type = type;
         this.target = target;
         this.source = source;
+        connected = false;
+        Main.Instance.CreateConnection(source.getPos(), target.getPos());
     }
 
 }

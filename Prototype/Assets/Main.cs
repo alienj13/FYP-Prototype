@@ -14,6 +14,7 @@ public class Main : MonoBehaviour
     public bool play = false;
     public GameObject objectPrefab;
     public GameObject cylinderPrefab;
+    public GameObject dendritePrefab;
     public Material on;
     public Material off;
     public static Main Instance { get; private set; }
@@ -58,8 +59,12 @@ public class Main : MonoBehaviour
         int posnew = pos * 1500;
        
         //Convert 2D array indices to spherical coordinates
-        float theta = (i / (float)(rows - 1)) * Mathf.PI; // 0 to PI (top to bottom)
+        //float theta = (i / (float)(rows - 1)) * Mathf.PI; // 0 to PI (top to bottom)
         float phi = (j / (float)(cols - 1)) * 2 * Mathf.PI; // 0 to 2PI (around the sphere)
+
+    // Calculate a contracted theta value that avoids the poles
+float poleOffset = 0.9f; // This offset will prevent theta from being 0 or PI exactly, avoiding the poles
+float theta = ((i + poleOffset) / ((float)(rows - 1) + (2 * poleOffset))) * Mathf.PI;
 
         Vector3 v = GetCubePosition(pos,2000,2000);
         
@@ -113,6 +118,26 @@ public class Main : MonoBehaviour
     cylinder.transform.up = targetPosition - sourcePosition;
 
     return cylinder;
+}
+
+ public GameObject Createdendrite(GameObject n, int targetPos)
+{
+    Vector3 sourcePosition = n.transform.position;
+    Vector3 targetPosition = GetCubePosition(targetPos,2000,2000);
+    // Calculate the midpoint
+    Vector3 midpoint = (sourcePosition + targetPosition) / 2f;
+
+    // Instantiate the cylinder at the midpoint
+    GameObject dendrite = GameObject.Instantiate(dendritePrefab, midpoint, Quaternion.identity);
+
+    // Scale the cylinder
+    float distance = Vector3.Distance(sourcePosition, targetPosition);
+    dendrite.transform.localScale = new Vector3(dendrite.transform.localScale.x/2, distance / 2f, dendrite.transform.localScale.z);
+
+    // Orient the cylinder
+    dendrite.transform.up = targetPosition - sourcePosition;
+
+    return dendrite;
 }
 
         void Update()

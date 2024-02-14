@@ -8,6 +8,7 @@ public class Group
     // private Neuron[][] neurons;
     private int[,] test;
     private GameObject[,] cubes;
+     private GameObject[,] dendrites;
     private string id;
     private List<double> data = new List<double>();
     private List<Synapse> connections = new List<Synapse>();
@@ -22,6 +23,7 @@ public class Group
     public Group(string id, string name, int xcount, int ycount, int pos)
     {
         cubes = new GameObject[xcount, ycount];
+        dendrites = new GameObject[xcount, ycount];
         this.pos = pos;
         this.id = id;
         this.Name = name;
@@ -35,6 +37,7 @@ public class Group
             for (int j = 0; j < ycount; j++)
             {
                 cubes[i, j] = Main.Instance.create(pos, i, j, xcount,ycount);
+                dendrites[i, j] = Main.Instance.Createdendrite(cubes[i,j],pos);
             }
         }
           foreach (Synapse s in connections)
@@ -46,8 +49,6 @@ public class Group
     }
 
   
-
-
 public string getID(){
     return id;
 }
@@ -83,6 +84,7 @@ public string getName(){
     public void Start()
     {
         Main.Instance.Turnoff(cubes, xcount, ycount);
+        Main.Instance.Turnoff(dendrites, xcount, ycount);
         test = new int[xcount, ycount];
 
         double probability = data[0];
@@ -100,6 +102,7 @@ public string getName(){
             {
                 test[rand, rand2] = 1;
                 Main.Instance.Turnon(cubes[rand, rand2]);
+                Main.Instance.Turnon(dendrites[rand, rand2]);
                 count--;
             }
         }

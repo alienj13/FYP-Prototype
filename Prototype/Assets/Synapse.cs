@@ -11,6 +11,8 @@ public class Synapse
 
     public bool connected;
 
+    public GameObject connection;
+
 
     public Synapse(string id, string type, Group source, Group target)
     {
@@ -19,7 +21,11 @@ public class Synapse
         this.target = target;
         this.source = source;
         connected = false;
-        Main.Instance.CreateConnection(source.getPos(), target.getPos());
+        connection = Main.Instance.CreateConnection(source.getPos(), target.getPos());
     }
+
+public GameObject getConnection(){
+    return connection;
+}
 
 }

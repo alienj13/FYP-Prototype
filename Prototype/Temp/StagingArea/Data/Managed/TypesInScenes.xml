@@ -1,7 +1,8 @@
 <linker>
-	<assembly fullname="Assembly-CSharp">
+	<assembly fullname="endel.nativewebsocket">
+		<type fullname="CameraController" preserve="nothing"/>
 		<type fullname="Main" preserve="nothing"/>
-		<type fullname="UDPServer" preserve="nothing"/>
+		<type fullname="WebSocketConnection" preserve="nothing"/>
 	</assembly>
 	<assembly fullname="Unity.TextMeshPro">
 		<type fullname="TMPro.TextMeshProUGUI" preserve="nothing"/>

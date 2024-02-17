@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Group
+public class Group : MonoBehaviour
 {
     private string Name { get; }
     // private Neuron[][] neurons;
@@ -21,9 +21,10 @@ public class Group
 
 
     public Group(string id, string name, int xcount, int ycount, int pos)
-    {
+    {Debug.Log("6.1");
         cubes = new GameObject[xcount, ycount];
         dendrites = new GameObject[xcount, ycount];
+        Debug.Log("6.2");
         this.pos = pos;
         this.id = id;
         this.Name = name;
@@ -31,21 +32,16 @@ public class Group
         test = new int[xcount, ycount];
         this.xcount = xcount;
         this.ycount = ycount;
-
+    Debug.Log("6.3");
         for (int i = 0; i < xcount; i++)
         {
             for (int j = 0; j < ycount; j++)
             {
-                cubes[i, j] = Main.Instance.create(pos, i, j, xcount,ycount);
-                dendrites[i, j] = Main.Instance.Createdendrite(cubes[i,j],pos);
+                cubes[i, j] = Main.Instance.createNeuron(pos, i, j, xcount,ycount);
+                dendrites[i, j] = Main.Instance.CreateDendrite(cubes[i,j],pos);
             }
         }
-          foreach (Synapse s in connections)
-          {
-            if(!s.connected){
-
-            }
-          }
+         
     }
 
   
@@ -105,6 +101,20 @@ public string getName(){
                 Main.Instance.Turnon(dendrites[rand, rand2]);
                 count--;
             }
+        }
+
+    }
+
+    public void desroygroup(){
+
+        foreach(Synapse obj in connections){
+            Destroy(obj.getConnection());
+        }
+        foreach(GameObject obj in cubes){
+            Destroy(obj);
+        }
+        foreach(GameObject obj in dendrites){
+            Destroy(obj);
         }
 
     }

@@ -17159,7 +17159,7 @@ struct __StaticArrayInitTypeSizeU3D7141_t7D5BE5C5FF769D52E91CAF086FC71F1B4A9E91A
 };
 #pragma pack(pop, tp)
 #pragma pack(push, tp, 1)
-struct __StaticArrayInitTypeSizeU3D174_tF813382784DAB831922A24CFA8E2E619F57246FF 
+struct __StaticArrayInitTypeSizeU3D222_tAC0A5D65DC86DF260EFA385827BC60F14028EF4F 
 {
 	union
 	{
@@ -17169,7 +17169,7 @@ struct __StaticArrayInitTypeSizeU3D174_tF813382784DAB831922A24CFA8E2E619F57246FF
 			{
 			};
 		};
-		uint8_t __StaticArrayInitTypeSizeU3D174_tF813382784DAB831922A24CFA8E2E619F57246FF__padding[174];
+		uint8_t __StaticArrayInitTypeSizeU3D222_tAC0A5D65DC86DF260EFA385827BC60F14028EF4F__padding[222];
 	};
 };
 #pragma pack(pop, tp)
@@ -35496,10 +35496,7 @@ struct ButtonStripField_tE6F879C441B5054B9905705BD471FD45AF928AED  : public Base
 struct CameraController_tBDA58BA75BF071A40A2FF259F1B6E8EF866A75C4  : public MonoBehaviour_t532A11E69716D348D8AA7F854AFCBFCB8AD17F71
 {
 	float ___movementSpeed;
-	float ___mouseSensitivity;
-	float ___clampAngle;
-	float ___verticalRotation;
-	float ___horizontalRotation;
+	float ___rotationSpeed;
 };
 struct Datatype_NMTOKEN_t38324CC80EBF3BAC84A658C532BE936C59DEA329  : public Datatype_token_t492F72F4A351E294ABE8AFA9F1E7089791FA012B
 {
@@ -35558,7 +35555,7 @@ struct Main_tB2BD4ED993D6F90E6554CF85083255E6CE0D3846  : public MonoBehaviour_t5
 	bool ___load;
 	bool ___play;
 	GameObject_t76FEDD663AB33C991A9C9A23129337651094216F* ___neuronPrefab;
-	GameObject_t76FEDD663AB33C991A9C9A23129337651094216F* ___cylinderPrefab;
+	GameObject_t76FEDD663AB33C991A9C9A23129337651094216F* ___connectionPrefab;
 	GameObject_t76FEDD663AB33C991A9C9A23129337651094216F* ___dendritePrefab;
 	Material_t18053F08F347D0DCA5E1140EC7EC4533DD8A14E3* ___on;
 	Material_t18053F08F347D0DCA5E1140EC7EC4533DD8A14E3* ___off;
@@ -37037,7 +37034,7 @@ struct U3CPrivateImplementationDetailsU3E_t3A51899FBAA581553000230A6A0F928985532
 struct U3CPrivateImplementationDetailsU3E_t6BEEBA763488FED9C0910BB300F9E7AE034A3E41_StaticFields
 {
 	__StaticArrayInitTypeSizeU3D528_t29A35614031D9F2F8127B13668321E5569FCFD4E ___054AA5976E2B7A614D1B89BF07AFB05EF5E1F4EA17133A197E424930FA35459C;
-	__StaticArrayInitTypeSizeU3D174_tF813382784DAB831922A24CFA8E2E619F57246FF ___4B8F642A01FB78F6BB7F6E0BA5FFD6AF3DF130FAD1D52BDBBBF0EF41332B4E17;
+	__StaticArrayInitTypeSizeU3D222_tAC0A5D65DC86DF260EFA385827BC60F14028EF4F ___0E339DF91A9D54BB32A12D1C16B138CC60CC29EE3EC85F4916DDECC39F6CF70A;
 };
 struct U3CPrivateImplementationDetailsU3E_t9FFB0BEB067161CE52A63D5857FEA61F74F17A50_StaticFields
 {
@@ -52239,7 +52236,7 @@ const Il2CppTypeDefinitionSizes g_typeDefinitionSize4939 = { sizeof(OnCloseCallb
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize4940;
 const Il2CppTypeDefinitionSizes g_typeDefinitionSize4940 = { sizeof(WebSocketFactory_t2032D2EEA139EAFD0574D7CBE3F9FC08D686E953), -1, sizeof(WebSocketFactory_t2032D2EEA139EAFD0574D7CBE3F9FC08D686E953_StaticFields), 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize4941;
-const Il2CppTypeDefinitionSizes g_typeDefinitionSize4941 = { sizeof(__StaticArrayInitTypeSizeU3D174_tF813382784DAB831922A24CFA8E2E619F57246FF)+ sizeof(RuntimeObject), sizeof(__StaticArrayInitTypeSizeU3D174_tF813382784DAB831922A24CFA8E2E619F57246FF), 0, 0 };
+const Il2CppTypeDefinitionSizes g_typeDefinitionSize4941 = { sizeof(__StaticArrayInitTypeSizeU3D222_tAC0A5D65DC86DF260EFA385827BC60F14028EF4F)+ sizeof(RuntimeObject), sizeof(__StaticArrayInitTypeSizeU3D222_tAC0A5D65DC86DF260EFA385827BC60F14028EF4F), 0, 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize4942;
 const Il2CppTypeDefinitionSizes g_typeDefinitionSize4942 = { sizeof(__StaticArrayInitTypeSizeU3D528_t29A35614031D9F2F8127B13668321E5569FCFD4E)+ sizeof(RuntimeObject), sizeof(__StaticArrayInitTypeSizeU3D528_t29A35614031D9F2F8127B13668321E5569FCFD4E), 0, 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize4943;

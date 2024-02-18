@@ -21,10 +21,10 @@ public class Group : MonoBehaviour
 
 
     public Group(string id, string name, int xcount, int ycount, int pos)
-    {Debug.Log("6.1");
+    {
         cubes = new GameObject[xcount, ycount];
         dendrites = new GameObject[xcount, ycount];
-        Debug.Log("6.2");
+
         this.pos = pos;
         this.id = id;
         this.Name = name;
@@ -32,7 +32,7 @@ public class Group : MonoBehaviour
         test = new int[xcount, ycount];
         this.xcount = xcount;
         this.ycount = ycount;
-    Debug.Log("6.3");
+ 
         for (int i = 0; i < xcount; i++)
         {
             for (int j = 0; j < ycount; j++)
@@ -105,7 +105,7 @@ public string getName(){
 
     }
 
-    public void desroygroup(){
+    public void desroyGroup(){
 
         foreach(Synapse obj in connections){
             Destroy(obj.getConnection());

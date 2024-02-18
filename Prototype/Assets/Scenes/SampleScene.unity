@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.11137546, g: 0.095438115, b: 0.07904107, a: 1}
+  m_IndirectSpecularColor: {r: 0.36385706, g: 0.36795917, b: 0.3402871, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -156,7 +156,7 @@ MonoBehaviour:
   load: 0
   play: 0
   neuronPrefab: {fileID: 6632094566943612692, guid: 4e542449d8cb38f458f6a9973e77564a, type: 3}
-  cylinderPrefab: {fileID: 2782823086665565106, guid: 3f9034063587c7d4893718637a4e31b7, type: 3}
+  connectionPrefab: {fileID: 2782823086665565106, guid: 3f9034063587c7d4893718637a4e31b7, type: 3}
   dendritePrefab: {fileID: 5576515728146260696, guid: 893c08bcea6faae49b1fc21fc754594b, type: 3}
   on: {fileID: 2100000, guid: e05e5ea174ee0cf42b4d370ec04a09ff, type: 2}
   off: {fileID: 2100000, guid: fb19e2c8e92907d4190496f0f3378fde, type: 2}
@@ -579,13 +579,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 705507993}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.09365663, y: 0.07862373, z: 0.97056323, w: 0.20749407}
+  m_LocalRotation: {x: -0.074288756, y: -0.010464237, z: 0.97368634, w: 0.21518962}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: -11.039, y: -8.742, z: 156.712}
+  m_LocalEulerAnglesHint: {x: -0.664, y: -8.58, z: 155.125}
 --- !u!1 &773197804
 GameObject:
   m_ObjectHideFlags: 0
@@ -958,7 +958,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 1000
-  mouseSensitivity: 50
+  mouseSensitivity: 100
   clampAngle: 85
 --- !u!1 &1699828643
 GameObject:

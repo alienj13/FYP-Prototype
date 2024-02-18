@@ -265,7 +265,7 @@ ScriptsOnlyBuild:
     className: UnityOnBecameVisibleMessageListener
   - hash:
       serializedVersion: 2
-      Hash: 40d64750134f38a6c199278a0919a96d
+      Hash: fc2acca36618b0b8207bda36df844407
     assemblyName: endel.nativewebsocket
     namespaceName: 
     className: Main
@@ -985,11 +985,11 @@ ScriptsOnlyBuild:
     className: UnityOnSliderValueChangedMessageListener
   - hash:
       serializedVersion: 2
-      Hash: b79c7f18714acd18f8b2453907d22a7e
+      Hash: de449fb9789408f16c845e249a0687ed
     assemblyName: endel.nativewebsocket
     namespaceName: 
     className: CameraController
   platform: 20
   scenePathNames:
   - Assets/Scenes/SampleScene.unity
-  playerPath: C:/xampp/htdocs/fyp
+  playerPath: C:/xampp/htdocs/fyp Prototype

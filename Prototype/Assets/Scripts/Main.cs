@@ -15,7 +15,7 @@ public class Main : MonoBehaviour
     public bool load = false;
     public bool play = false;
     public GameObject neuronPrefab;
-    public GameObject cylinderPrefab;
+    public GameObject connectionPrefab;
     public GameObject dendritePrefab;
     public Material on;
     public Material off;
@@ -54,17 +54,14 @@ public class Main : MonoBehaviour
     }
 
     public GameObject createNeuron(int pos, int i, int j, int rows, int cols)
-    {Debug.Log("6.4");
+    {
      
         int posnew = pos * 1500;
-
         float phi = (j / (float)(cols - 1)) * 2 * Mathf.PI;
-
         float poleOffset = 0.9f;
         float theta = ((i + poleOffset) / ((float)(rows - 1) + (2 * poleOffset))) * Mathf.PI;
 
         Vector3 v = GetCubePosition(pos, 2000, 2000);
-
         Vector3 position;
 
         if (pos == 0)
@@ -84,9 +81,7 @@ public class Main : MonoBehaviour
             );
         }
 
-        Debug.Log("6.4");
         GameObject neuron = Instantiate(neuronPrefab, position + v, Quaternion.identity, transform);
-        Debug.Log("6.5");
         MeshRenderer renderer = neuronPrefab.GetComponent<MeshRenderer>();
         if (renderer != null)
         {
@@ -102,26 +97,22 @@ public class Main : MonoBehaviour
     {
         Vector3 sourcePosition = GetCubePosition(sourcePos, 2000, 2000);
         Vector3 targetPosition = GetCubePosition(targetPos, 2000, 2000);
-
         Vector3 midpoint = (sourcePosition + targetPosition) / 2f;
 
-        GameObject cylinder = GameObject.Instantiate(cylinderPrefab, midpoint, Quaternion.identity);
+        GameObject connection = GameObject.Instantiate(connectionPrefab, midpoint, Quaternion.identity);
 
         float distance = Vector3.Distance(sourcePosition, targetPosition);
-        cylinder.transform.localScale = new Vector3(cylinder.transform.localScale.x / 2, distance / 2f, cylinder.transform.localScale.z);
+        connection.transform.localScale = new Vector3(connection.transform.localScale.x / 2f, distance / 2f, connection.transform.localScale.z/2f);
+        connection.transform.up = targetPosition - sourcePosition;
 
-        cylinder.transform.up = targetPosition - sourcePosition;
-
-        return cylinder;
+        return connection;
     }
 
     public GameObject CreateDendrite(GameObject n, int targetPos)
     {
         Vector3 sourcePosition = n.transform.position;
         Vector3 targetPosition = GetCubePosition(targetPos, 2000, 2000);
-
         Vector3 midpoint = (sourcePosition + targetPosition) / 2f;
-
 
         GameObject dendrite = GameObject.Instantiate(dendritePrefab, midpoint, Quaternion.identity);
         float distance = Vector3.Distance(sourcePosition, targetPosition);
@@ -158,18 +149,16 @@ public class Main : MonoBehaviour
 
     public void ReceiveFileContent(string Contents)
     {
-        Debug.Log("1");
+  
         clear();
-        Debug.Log("2");
+  
         try
         {
             XmlDocument xmlDoc = new XmlDocument();
-            Debug.Log("3");
             xmlDoc.LoadXml(Contents);
-            Debug.Log("4");
             XmlNodeList groupNodes = xmlDoc.GetElementsByTagName("Group");
-            Debug.Log("5");
             int pos = 0;
+
             foreach (XmlNode groupNode in groupNodes)
             {
                 XmlElement groupElement = (XmlElement)groupNode;
@@ -188,9 +177,7 @@ public class Main : MonoBehaviour
 
                 XmlElement neurons = (XmlElement)groupElement.GetElementsByTagName("Neuron")[0];
                 Debug.Log("    Neuron name: " + neurons.GetAttribute("name"));
-                Debug.Log("6");
                 Groups.Add(new Group(Gid, Gname, xCount, int.Parse(yCount), pos));
-                Debug.Log("7");
                 pos++;
             }
                 
@@ -199,7 +186,6 @@ public class Main : MonoBehaviour
             foreach (XmlNode groupNode in groupNodes)
             {
                 XmlElement groupElement = (XmlElement)groupNode;
-
                 Debug.Log("    ID: " + groupElement.GetAttribute("id"));
                 string id = groupElement.GetAttribute("id");
 
@@ -301,7 +287,7 @@ public class Main : MonoBehaviour
         play = false;
         foreach (Group group in Groups)
         {
-            group.desroygroup();
+            group.desroyGroup();
         }
         Groups = new List<Group>();
         
